@@ -15,8 +15,10 @@ import activityRoutes from "./routes/activityRoutes.js";
 dotenv.config();
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+  origin: "*", // for now (later restrict to Vercel URL)
+  credentials: true
+}));app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/employees", employeeRoutes);
@@ -30,10 +32,11 @@ app.use((req, res, next) => {
   next();
 });
 
+const PORT = process.env.PORT || 5000;
 const startServer = async () => {
   await connectDB();
   await seedAdmin();
-  app.listen(5000, () => console.log("Server running"));
+  app.listen(PORT, () => console.log(`Server running on ${PORT}`));
 };
 
 startServer();
