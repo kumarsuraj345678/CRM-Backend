@@ -1,0 +1,11 @@
+name,email,source,date,location,language,type,scheduledDate
+Amit Sharma,amit.sharma@gmail.com,Website,2026-04-01,Delhi,Hindi,hot,2026-04-10
+Priya Verma,priya.verma@gmail.com,Facebook,2026-04-02,Mumbai,English,warm,2026-04-11
+Rahul Singh,rahul.singh@gmail.com,Referral,2026-04-03,Noida,Hindi,cold,2026-04-12
+Sneha Kapoor,sneha.kapoor@gmail.com,Instagram,2026-04-04,Bangalore,English,hot,2026-04-13
+Vikas Yadav,vikas.yadav@gmail.com,Website,2026-04-05,Delhi,Hindi,warm,2026-04-14
+Neha Gupta,neha.gupta@gmail.com,Google Ads,2026-04-06,Pune,English,cold,2026-04-15
+Arjun Mehta,arjun.mehta@gmail.com,Referral,2026-04-07,Chandigarh,Hindi,hot,2026-04-16
+Pooja Singh,pooja.singh@gmail.com,Facebook,2026-04-08,Jaipur,Hindi,warm,2026-04-17
+Karan Malhotra,karan.m@gmail.com,Instagram,2026-04-09,Gurgaon,English,cold,2026-04-18
+Anjali Desai,anjali.desai@gmail.com,Website,2026-04-10,Ahmedabad,English,hot,2026-04-19
