@@ -15,10 +15,13 @@ import activityRoutes from "./routes/activityRoutes.js";
 dotenv.config();
 
 const app = express();
-app.use(cors({
-  origin: "*", // for now (later restrict to Vercel URL)
-  credentials: true
-}));app.use(express.json());
+app.use(
+  cors({
+    origin: "https://crm-frontend-theta-ruddy.vercel.app",
+    credentials: true,
+  }),
+);
+app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/employees", employeeRoutes);
