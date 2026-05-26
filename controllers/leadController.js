@@ -48,7 +48,6 @@ export const createLead = async (req, res) => {
         countMap[c._id] = c.count;
       });
 
-
       const eligibleUsers = filtered.filter(
         (emp) => (countMap[emp._id] || 0) < LEAD_THRESHOLD,
       );
@@ -57,6 +56,8 @@ export const createLead = async (req, res) => {
           (a, b) => (countMap[a._id] || 0) - (countMap[b._id] || 0),
         );
         assignedUser = eligibleUsers[0];
+      } else if (filtered.length > 0) {
+        assignedUser = filtered[0];
       }
     }
 
@@ -91,22 +92,17 @@ export const getLeads = async (req, res) => {
   }
 };
 
-
 export const getMyLeads = async (req, res) => {
   try {
-
-    if (!req.user) {
-      return res.status(401).json({ message: "User not found" });
-    }
+    const userId = req.user._id;
 
     const leads = await Lead.find({
-      assignedTo: req.user._id,
+      assignedTo: userId,
     });
-
 
     res.json(leads);
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -160,7 +156,6 @@ export const assignLead = async (req, res) => {
   }
 };
 
-
 export const updateLead = async (req, res) => {
   try {
     const { id } = req.params;
@@ -211,7 +206,7 @@ const assignUserToLead = async (language) => {
   });
 
   if (filtered.length === 0) {
-    return null; 
+    return null;
   }
 
   const counts = await Lead.aggregate([
@@ -258,7 +253,7 @@ export const uploadCSV = async (req, res) => {
         results.sort((a, b) => {
           const dateA = parseDate(a.Date);
           const dateB = parseDate(b.Date);
-          return dateA - dateB; 
+          return dateA - dateB;
         });
         const employees = await User.find({
           role: "employee",
@@ -321,6 +316,8 @@ export const uploadCSV = async (req, res) => {
               assignedUser = eligibleUsers[0];
               countMap[assignedUser._id] =
                 (countMap[assignedUser._id] || 0) + 1;
+            } else if (pool.length > 0) {
+              assignedUser = pool[0];
             }
           }
 
@@ -339,7 +336,7 @@ export const uploadCSV = async (req, res) => {
             date: parseDate(row.Date),
             location: row.Location || "",
             language: row.Language || "",
-            assignedTo: assignedUser ? assignedUser._id : null, 
+            assignedTo: assignedUser ? assignedUser._id : null,
             status: "Ongoing",
             type: normalizeType(row.Type),
             scheduledDate: parseDate(row["Scheduled Date"]),

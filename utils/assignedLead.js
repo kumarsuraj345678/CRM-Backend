@@ -2,6 +2,7 @@ import User from "../models/User.js";
 
 export const assignLead = async (lead) => {
   const users = await User.find({
+    role: "employee",
     language: lead.language,
     assignedLeadsCount: { $lt: 3 },
   }).sort({ assignedLeadsCount: 1 });

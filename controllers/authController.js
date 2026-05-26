@@ -5,28 +5,25 @@ import jwt from "jsonwebtoken";
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    
-    const user = await User.findOne({ email });
-    
+
+    const user = await User.findOne({ email: email.trim() });
+
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    
+
     let isMatch = false;
 
     if (user.role === "employee" && password === email) {
       isMatch = true;
-    }
-
-    else if (user.role === "admin") {
+    } else if (user.role === "admin") {
       isMatch = await bcrypt.compare(password, user.password);
     }
-    
+
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    
-    
+
     const generateToken = (id) => {
       return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
     };
@@ -41,7 +38,7 @@ export const login = async (req, res) => {
         language: user.language,
         status: user.status,
       },
-      token:generateToken(user._id)
+      token: generateToken(user._id),
     });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
