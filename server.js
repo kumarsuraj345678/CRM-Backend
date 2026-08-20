@@ -11,6 +11,7 @@ import breakRoutes from "./routes/breakRoutes.js";
 import seedAdmin from "./seed/seedAdmin.js";
 import attendanceRoutes from "./routes/attendanceRoutes.js";
 import activityRoutes from "./routes/activityRoutes.js";
+import healthRoutes from "./routes/healthRoutes.js";
 
 dotenv.config();
 
@@ -22,6 +23,8 @@ app.use(
   }),
 );
 app.use(express.json());
+
+app.use("/api/health", healthRoutes);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/employees", employeeRoutes);
